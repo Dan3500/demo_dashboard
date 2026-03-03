@@ -28,6 +28,9 @@ class Competency implements \JsonSerializable
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Level $level = null;
 
+    #[ORM\ManyToOne]
+    private ?Type $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +96,18 @@ class Competency implements \JsonSerializable
         return $this;
     }
 
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -102,6 +117,7 @@ class Competency implements \JsonSerializable
             'weight'    => $this->weight,
             'active'    => $this->active,
             'level_id'  => $this->level?->getId(),
+            'type'      => $this->type?->jsonSerialize(),
         ];
     }
 }

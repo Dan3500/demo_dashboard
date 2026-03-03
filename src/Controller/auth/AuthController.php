@@ -31,7 +31,7 @@ class AuthController extends ApiController
      *   }
      * }
      */
-    #[Route('/login', name: 'auth_login', methods: ['POST'])]
+    #[Route('/v1/login', name: 'auth_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
         try {
@@ -59,7 +59,7 @@ class AuthController extends ApiController
      *   "data": { "message": "Sesión cerrada correctamente" }
      * }
      */
-    #[Route('/logout', name: 'auth_logout', methods: ['POST'])]
+    #[Route('/v1/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(): JsonResponse
     {
         try {
