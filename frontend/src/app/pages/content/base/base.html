@@ -1,0 +1,70 @@
+<div class="layout">
+  <app-navbar />
+  <div class="layout__content">
+
+    <!-- Encabezado de la página según ruta -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-header__title">{{ config.title }}</h1>
+        <p class="page-header__desc">{{ config.description }}</p>
+      </div>
+      @if (config.actionLabel) {
+        <button class="page-header__action" (click)="openModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          {{ config.actionLabel }}
+        </button>
+      }
+    </div>
+
+    <!-- Carga de tabla dinámica -->
+    @switch (config.entity) {
+      @case ('specialities') {
+        <app-specialities-data-table />
+      }
+      @case ('levels') {
+        <app-levels-data-table />
+      }
+      @case ('competencies') {
+        <app-competencies-data-table />
+      }
+      @case ('people') {
+        <app-people-data-table />
+      }
+      @case ('evaluations') {
+        <app-evaluations-data-table />
+      }
+      @case ('reports') {
+        <app-reports-data-table />
+      }
+    }
+
+    <!-- Modal con formulario dinámico -->
+    <app-modal [visible]="modalOpen" [title]="config.actionLabel ?? ''" (closed)="closeModal()">
+      @switch (config.entity) {
+        @case ('specialities') {
+          <app-specialities-form (close)="closeModal()" />
+        }
+        @case ('levels') {
+          <app-levels-form (close)="closeModal()" />
+        }
+        @case ('competencies') {
+          <app-competencies-form (close)="closeModal()" />
+        }
+        @case ('people') {
+          <app-people-form (close)="closeModal()" />
+        }
+        @case ('evaluations') {
+          <app-evaluations-form (close)="closeModal()" />
+        }
+      }
+    </app-modal>
+
+  </div>
+</div>
+
+
+

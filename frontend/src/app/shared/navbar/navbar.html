@@ -1,0 +1,35 @@
+<div class="navbar-wrapper" [class.navbar-wrapper--collapsed]="collapsed()">
+  <aside class="navbar">
+
+    <!-- Elementos de navegación -->
+    <nav class="navbar__nav">
+      @for (item of navItems; track item.route) {
+        <a
+          class="navbar__item"
+          [routerLink]="item.route"
+          routerLinkActive="navbar__item--active"
+        >
+          <mat-icon class="navbar__item-icon">{{ item.icon }}</mat-icon>
+          <span class="navbar__item-label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <!-- Usuario -->
+    <div class="navbar__footer">
+      <div class="navbar__avatar">{{ initials }}</div>
+      <div class="navbar__admin-info">
+        <span class="navbar__admin-name">{{ admin?.name }}</span>
+        <span class="navbar__admin-email">{{ admin?.email }}</span>
+      </div>
+      <button class="navbar__logout" (click)="logout()" title="Cerrar sesión">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Botón de mostrar/ocultar menú -->
+  <button class="navbar-toggle" (click)="toggle()" [title]="collapsed() ? 'Mostrar menú' : 'Ocultar menú'">
+    <mat-icon [style.transform]="collapsed() ? 'rotate(180deg)' : 'rotate(0deg)'" style="transition: transform 0.3s ease">chevron_left</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,51 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+
+  &__content {
+    flex: 1;
+    padding: 2rem;
+    background: #f0f2f5;
+    min-width: 0;
+  }
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 0.25rem;
+  }
+
+  &__desc {
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.1rem;
+    background: #1e40af;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+
+    &:hover {
+      background: #1d3a9e;
+    }
+  }
+}
