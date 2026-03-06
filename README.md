@@ -2,6 +2,23 @@
 
 Panel de administración full-stack para la gestión de especialidades, niveles, competencias, personas y evaluaciones.
 
+🌐 **Producción:** [https://demo-dashboard.danielsoltero.com/](https://demo-dashboard.danielsoltero.com/)
+
+---
+
+## Índice
+
+1. [Tecnologías](#tecnologías)
+2. [Estructura del proyecto](#estructura-del-proyecto)
+3. [Entidades y esquema de base de datos](#entidades-y-esquema-de-base-de-datos)
+4. [Modelo Entidad-Relación](#modelo-entidad-relación)
+5. [Migraciones de base de datos](#migraciones-de-base-de-datos)
+6. [API](#api)
+7. [Funcionalidades del frontend](#funcionalidades-del-frontend)
+8. [Funcionamiento general](#funcionamiento-general)
+9. [Puesta en marcha](#puesta-en-marcha)
+10. [Despliegue en producción](#despliegue-en-producción)
+
 ---
 
 ## Tecnologías
