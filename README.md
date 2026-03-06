@@ -37,7 +37,7 @@ Panel de administración full-stack para la gestión de especialidades, niveles,
 | Capa | Tecnología |
 |------|-----------|
 | Lenguaje | TypeScript |
-| Framework | Angular 19 |
+| Framework | Angular 21 |
 | Estilos | SCSS + CSS custom properties (theming) |
 | Componentes | Angular Material (table, sort, paginator, icons) |
 | Alertas | SweetAlert2 |
@@ -471,5 +471,3 @@ php bin/console cache:clear --env=prod
 
 ### Utilidades de servidor
 - **`public/unzip.php`**: descomprime archivos `.zip` subidos al servidor directamente desde el navegador. Detecta automáticamente los `.zip` en `public/` y extrae su contenido en la misma carpeta.
-
-
