@@ -1,3 +1,5 @@
+@use '../../../shared/data-table/datatable-styles-shared' as *;
+
 .layout {
   display: flex;
   min-height: 100vh;
@@ -5,17 +7,179 @@
   &__content {
     flex: 1;
     padding: 2rem;
-    background: #f0f2f5;
+    background: var(--bg-color);
+    overflow-y: auto;
+  }
+}
 
-    h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #111;
+// ── Header ────────────────────────────────────────────────────────────────────
+.db-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  &__text {
+    h1 {
+      margin: 0 0 0.2rem;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text-color);
     }
-
     p {
-      color: #666;
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.6;
     }
+  }
+}
+
+// Reuse the shared select style from dt-select-wrap (defined in datatable-styles-shared)
+// Extra specificity to work outside a data-table
+.db-header__filter.dt-select-wrap {
+  flex-shrink: 0;
+  min-width: 220px;
+}
+
+// ── Loading ───────────────────────────────────────────────────────────────────
+.db-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem;
+  justify-content: center;
+  color: var(--text-color);
+  opacity: 0.6;
+  font-size: 0.95rem;
+}
+
+// ── Stat cards ────────────────────────────────────────────────────────────────
+.db-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 1100px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px)  { grid-template-columns: 1fr; }
+}
+
+.db-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.1;
+  }
+
+  &__sub {
+    font-size: 0.78rem;
+    color: var(--text-color);
+    opacity: 0.45;
+  }
+
+  &__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #eef0fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    mat-icon {
+      color: #3f5fe0;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+}
+
+// ── Charts ────────────────────────────────────────────────────────────────────
+.db-charts {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1.25rem;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.db-chart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.5rem;
+
+  &__title {
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  &__canvas-wrap {
+    position: relative;
+    height: 280px;
+    width: 100%;
+
+    &--donut {
+      height: 220px;
+    }
+  }
+
+  &__donut-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+}
+
+// ── Donut legend ─────────────────────────────────────────────────────────────
+.db-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--text-color);
+    opacity: 0.8;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 }

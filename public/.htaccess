@@ -1,0 +1,31 @@
+# Symfony front controller
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Base del subdirectorio en producción
+    RewriteBase /server/
+
+    # Redirigir a HTTPS (opcional, descomenta si tienes SSL)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Servir archivos y carpetas reales directamente
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Todo lo demás va al front controller
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        RedirectMatch 307 ^/$ /index.php/
+    </IfModule>
+</IfModule>
+
+# Bloquear acceso a archivos sensibles dentro de public/
+<FilesMatch "\.(env|log|sql|sh|bak|ini|cfg|conf|htpasswd|htaccess)$">
+    Require all denied
+</FilesMatch>

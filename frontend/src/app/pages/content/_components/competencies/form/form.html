@@ -1,1 +1,97 @@
-<p>form works!</p>
+<form class="cform" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="comp-name">Nombre <span class="cform__required">*</span></label>
+      <input
+        id="comp-name"
+        class="cform__input"
+        [class.cform__input--error]="form.get('name')?.invalid && form.get('name')?.touched"
+        formControlName="name"
+        placeholder="Ej: Control de versiones"
+        autocomplete="off"
+      />
+      @if (form.get('name')?.invalid && form.get('name')?.touched) {
+        <span class="cform__error">El nombre es obligatorio</span>
+      }
+    </div>
+  </div>
+
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="comp-attr">Atributo <span class="cform__required">*</span></label>
+      <input
+        id="comp-attr"
+        class="cform__input"
+        [class.cform__input--error]="form.get('attribute')?.invalid && form.get('attribute')?.touched"
+        formControlName="attribute"
+        placeholder="Ej: Core, Obligatoria, Crítica"
+        autocomplete="off"
+      />
+      @if (form.get('attribute')?.invalid && form.get('attribute')?.touched) {
+        <span class="cform__error">El atributo es obligatorio</span>
+      }
+    </div>
+  </div>
+
+  <div class="cform__row cform__row--two">
+    <div class="cform__field">
+      <label class="cform__label" for="comp-type">Tipo</label>
+      <select id="comp-type" class="cform__select" formControlName="type_id">
+        <option [value]="null">Sin tipo</option>
+        @for (type of types(); track type.id) {
+          <option [value]="type.id">{{ type.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="cform__field">
+      <label class="cform__label" for="comp-weight">Peso <span class="cform__required">*</span></label>
+      <input
+        id="comp-weight"
+        class="cform__input"
+        type="number"
+        min="1"
+        max="100"
+        formControlName="weight"
+      />
+      @if (form.get('weight')?.invalid && form.get('weight')?.touched) {
+        <span class="cform__error">Peso debe ser entre 1 y 100</span>
+      }
+    </div>
+  </div>
+
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="comp-level">Nivel asociado</label>
+      <select id="comp-level" class="cform__select" formControlName="level_id">
+        <option [value]="null">Sin nivel</option>
+        @for (level of levels(); track level.id) {
+          <option [value]="level.id">{{ level.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="cform__row">
+    <div class="cform__field cform__field--toggle">
+      <span class="cform__label">Estado</span>
+      <label class="cform__toggle">
+        <input type="checkbox" formControlName="active" />
+        <span class="cform__toggle-track"></span>
+        <span class="cform__toggle-label">{{ form.get('active')?.value ? 'Activa' : 'Inactiva' }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="cform__actions">
+    <button type="button" class="cform__btn cform__btn--cancel" (click)="closeForm()">
+      Cancelar
+    </button>
+    <button type="submit" class="cform__btn cform__btn--submit" [disabled]="form.invalid || submitting()">
+      @if (submitting()) {
+        <span class="cform__spinner"></span>
+      }
+      {{ isEditMode() ? 'Actualizar' : 'Crear competencia' }}
+    </button>
+  </div>
+</form>

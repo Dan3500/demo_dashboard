@@ -33,9 +33,16 @@ class Level implements \JsonSerializable
     #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'level')]
     private Collection $people;
 
+    /**
+     * @var Collection<int, Competency>
+     */
+    #[ORM\OneToMany(targetEntity: Competency::class, mappedBy: 'level')]
+    private Collection $competencies;
+
     public function __construct()
     {
-        $this->people = new ArrayCollection();
+        $this->people       = new ArrayCollection();
+        $this->competencies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,7 +119,7 @@ class Level implements \JsonSerializable
     public function removePerson(Person $person): static
     {
         if ($this->people->removeElement($person)) {
-            // set the owning side to null (unless already changed)
+            // anulamos la relación en el lado propietario (salvo que ya haya cambiado)
             if ($person->getLevel() === $this) {
                 $person->setLevel(null);
             }
@@ -121,14 +128,23 @@ class Level implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return Collection<int, Competency>
+     */
+    public function getCompetencies(): Collection
+    {
+        return $this->competencies;
+    }
+
     public function jsonSerialize(): array
     {
         return [
-            'id'           => $this->id,
-            'name'         => $this->name,
-            'description'  => $this->description,
-            'percentage'   => $this->percentage,
-            'speciality_id'=> $this->speciality?->getId(),
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'description'      => $this->description,
+            'percentage'       => $this->percentage,
+            'speciality_id'    => $this->speciality?->getId(),
+            'competency_count' => $this->competencies->count(),
         ];
     }
 }

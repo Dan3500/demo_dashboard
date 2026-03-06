@@ -1,0 +1,19 @@
+# Bloquear acceso directo a todo excepto a public/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirigir tráfico de /server/* → /server/public/*
+    # (ajusta /server/ si cambias el subdirectorio)
+    RewriteCond %{REQUEST_URI} !^/server/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Bloquear acceso a archivos sensibles
+<FilesMatch "(^\.env|\.env\.|\.log$|\.sql$|\.sh$|\.bak$|\.ini$|\.cfg$|\.conf$|\.lock$|\.json$|\.yaml$|\.yml$|\.xml$|\.md$|htpasswd)">
+    Require all denied
+</FilesMatch>
+
+# Bloquear directorios sensibles explícitamente
+<IfModule mod_rewrite.c>
+    RewriteRule ^(src|config|migrations|var|vendor|bin|migration)(/|$) - [F,L]
+</IfModule>

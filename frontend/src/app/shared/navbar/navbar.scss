@@ -32,7 +32,7 @@
   align-items: center;
   justify-content: center;
   background: #103c83;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
@@ -49,8 +49,8 @@
   flex-direction: column;
   width: 240px;
   min-height: 100vh;
-  background: #1b5bc2;
-  padding: 1.5rem 0.75rem;
+  background: var(--navbar-bg, #1b5bc2);
+  padding: 1.5rem 0;
   gap: 0.25rem;
   flex-shrink: 0;
   overflow: hidden;
@@ -62,13 +62,16 @@
     flex-direction: column;
     gap: 0.15rem;
     flex: 1;
+    width: 100%;
+    padding: 0 0.75rem;
   }
 
   &__item {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 0.75rem;
-    padding: 0.6rem 0.75rem;
+    padding: 0.6rem 1rem;
     border-radius: 8px;
     color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
@@ -77,6 +80,7 @@
     transition: background 0.15s, color 0.15s;
     cursor: pointer;
     white-space: nowrap;
+    width: 100%;
 
     &:hover {
       background: rgba(255, 255, 255, 0.12);
@@ -97,6 +101,21 @@
 
   &__item-label {
     overflow: hidden;
+  }
+
+  // Header
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 
   // Footer
@@ -122,6 +141,15 @@
     font-size: 0.8rem;
     font-weight: 700;
     flex-shrink: 0;
+
+    &--lg {
+      width: 52px;
+      height: 52px;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+      margin-bottom: 0.15rem;
+    }
   }
 
   &__admin-info {
@@ -147,6 +175,25 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &__theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+    }
   }
 
   &__logout {

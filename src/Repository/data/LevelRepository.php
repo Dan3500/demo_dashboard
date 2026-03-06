@@ -16,6 +16,24 @@ class LevelRepository extends ServiceEntityRepository
         parent::__construct($registry, Level::class);
     }
 
+    public function save(Level $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Level $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return Level[] Returns an array of Level objects
     //     */

@@ -97,7 +97,7 @@ class Speciality implements \JsonSerializable
     public function removeLevel(Level $level): static
     {
         if ($this->levels->removeElement($level)) {
-            // set the owning side to null (unless already changed)
+            // anulamos la relación en el lado propietario (salvo que ya haya cambiado)
             if ($level->getSpeciality() === $this) {
                 $level->setSpeciality(null);
             }
@@ -108,11 +108,21 @@ class Speciality implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
+        $personCount = 0;
+        $competencyCount = 0;
+        foreach ($this->levels as $level) {
+            $personCount += $level->getPeople()->count();
+            $competencyCount += $level->getCompetencies()->count();
+        }
+
         return [
-            'id'          => $this->id,
-            'name'        => $this->name,
-            'description' => $this->description,
-            'active'      => $this->active,
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'description'      => $this->description,
+            'active'           => $this->active,
+            'level_count'      => $this->levels->count(),
+            'person_count'     => $personCount,
+            'competency_count' => $competencyCount,
         ];
     }
 }

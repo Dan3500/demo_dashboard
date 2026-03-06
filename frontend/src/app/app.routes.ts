@@ -32,7 +32,7 @@ export const routes: Routes = [
     data: {
       entity: 'level',
       title: 'Niveles',
-      description: 'Gestión de niveles de carrera',
+      description: 'Gestión de niveles de carrera y su requisitos',
       actionLabel: 'Nuevo nivel',
     },
   },
@@ -43,7 +43,7 @@ export const routes: Routes = [
     data: {
       entity: 'competency',
       title: 'Competencias',
-      description: 'Gestión de competencias evaluables',
+      description: 'Gestión de competencias evaluables de las personas',
       actionLabel: 'Nueva competencia',
     },
   },
@@ -56,27 +56,6 @@ export const routes: Routes = [
       title: 'Personas',
       description: 'Gestión de empleados y su progreso profesional',
       actionLabel: 'Nueva persona',
-    },
-  },
-  {
-    path: 'evaluaciones',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/content/base/base').then((m) => m.Base),
-    data: {
-      entity: 'evaluation',
-      title: 'Evaluaciones',
-      description: 'Gestión de evaluaciones de desempeño',
-      actionLabel: 'Nueva evaluación',
-    },
-  },
-  {
-    path: 'informes',
-    canActivate: [authGuard],
-    loadComponent: () => import('./pages/content/base/base').then((m) => m.Base),
-    data: {
-      entity: 'report',
-      title: 'Informes',
-      description: 'Visualización de informes y métricas de desempeño',
     },
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

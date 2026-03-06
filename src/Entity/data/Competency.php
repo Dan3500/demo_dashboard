@@ -25,7 +25,7 @@ class Competency implements \JsonSerializable
     #[ORM\Column]
     private ?bool $active = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     private ?Level $level = null;
 
     #[ORM\ManyToOne]

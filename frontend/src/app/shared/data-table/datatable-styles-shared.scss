@@ -1,0 +1,484 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// Estilos compartidos para todos los data tables: toolbar, chips, card, 
+// scroll, loading, Angular Material overrides, badges, menú de acciones y estado vacío. --- IGNORE ---.
+// ═══════════════════════════════════════════════════════════════════════════
+
+
+// ── Toolbar ──────────────────────────────────────────────────────────────────
+.dt-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+
+.dt-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 10px;
+  min-width: 200px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.dt-select-icon,
+.dt-select-chevron {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  color: var(--text-color);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.dt-select-chevron {
+  pointer-events: none;
+}
+
+.dt-select {
+  flex: 1;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13.5px;
+  color: var(--text-color);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+
+// ── Type chips ────────────────────────────────────────────────────────────────
+.dt-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  // Hide scrollbar visually but keep it functional
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0 10px;
+}
+
+.dt-chips__label {
+  font-size: 13px;
+  color: var(--text-color);
+  opacity: 0.7;
+  margin-right: 2px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.dt-chip {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 5px 13px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+  background: var(--card-bg);
+  color: var(--text-color);
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover    { border-color: var(--text-color); opacity: 1; color: var(--text-color); }
+  &--active  { background: var(--text-color); color: var(--card-bg) !important; border-color: var(--text-color); }
+
+  // Paleta cíclica por índice de inserción (fallback para tipos nuevos, 0-7)
+  &[data-type-idx="0"] { color: #6d28d9; border-color: #ddd6fe; background: #f5f3ff; &.dt-chip--active { background: #7c3aed; border-color: #7c3aed; color: #fff; } }
+  &[data-type-idx="1"] { color: #0f766e; border-color: #99f6e4; background: #f0fdfa; &.dt-chip--active { background: #0d9488; border-color: #0d9488; color: #fff; } }
+  &[data-type-idx="2"] { color: #92400e; border-color: #fde68a; background: #fffbeb; &.dt-chip--active { background: #d97706; border-color: #d97706; color: #fff; } }
+  &[data-type-idx="3"] { color: #1e40af; border-color: #bfdbfe; background: #eff6ff; &.dt-chip--active { background: #1d4ed8; border-color: #1d4ed8; color: #fff; } }
+  &[data-type-idx="4"] { color: #9f1239; border-color: #fecdd3; background: #fff1f2; &.dt-chip--active { background: #e11d48; border-color: #e11d48; color: #fff; } }
+  &[data-type-idx="5"] { color: #166534; border-color: #bbf7d0; background: #f0fdf4; &.dt-chip--active { background: #16a34a; border-color: #16a34a; color: #fff; } }
+  &[data-type-idx="6"] { color: #5b21b6; border-color: #e9d5ff; background: #faf5ff; &.dt-chip--active { background: #9333ea; border-color: #9333ea; color: #fff; } }
+  &[data-type-idx="7"] { color: #9a3412; border-color: #fed7aa; background: #fff7ed; &.dt-chip--active { background: #ea580c; border-color: #ea580c; color: #fff; } }
+  // Colores por nombre (mayor prioridad al ir después, solo para tipos definidos)
+  &[data-type*='tecnica'],
+  &[data-type*='técnica'] {
+    color: #6d28d9; border-color: #ddd6fe; background: #f5f3ff;
+    &.dt-chip--active { background: #7c3aed; border-color: #7c3aed; }
+  }
+  &[data-type*='soft'] {
+    color: #0f766e; border-color: #99f6e4; background: #f0fdfa;
+    &.dt-chip--active { background: #0d9488; border-color: #0d9488; }
+  }
+  &[data-type*='liderazgo'] {
+    color: #92400e; border-color: #fde68a; background: #fffbeb;
+    &.dt-chip--active { background: #d97706; border-color: #d97706; }
+  }
+  &[data-type*='compliance'] {
+    color: #4b5563; border-color: #e5e7eb;
+    &.dt-chip--active { background: #6b7280; border-color: #6b7280; }
+  }
+
+  // Speciality palette – cyclic index 0–7
+  &[data-spec="0"] { color: #6d28d9; border-color: #ddd6fe; background: #f5f3ff; &.dt-chip--active { background: #7c3aed; border-color: #7c3aed; color: #fff; } }
+  &[data-spec="1"] { color: #0f766e; border-color: #99f6e4; background: #f0fdfa; &.dt-chip--active { background: #0d9488; border-color: #0d9488; color: #fff; } }
+  &[data-spec="2"] { color: #92400e; border-color: #fde68a; background: #fffbeb; &.dt-chip--active { background: #d97706; border-color: #d97706; color: #fff; } }
+  &[data-spec="3"] { color: #1e40af; border-color: #bfdbfe; background: #eff6ff; &.dt-chip--active { background: #1d4ed8; border-color: #1d4ed8; color: #fff; } }
+  &[data-spec="4"] { color: #9f1239; border-color: #fecdd3; background: #fff1f2; &.dt-chip--active { background: #e11d48; border-color: #e11d48; color: #fff; } }
+  &[data-spec="5"] { color: #166534; border-color: #bbf7d0; background: #f0fdf4; &.dt-chip--active { background: #16a34a; border-color: #16a34a; color: #fff; } }
+  &[data-spec="6"] { color: #5b21b6; border-color: #e9d5ff; background: #faf5ff; &.dt-chip--active { background: #9333ea; border-color: #9333ea; color: #fff; } }
+  &[data-spec="7"] { color: #9a3412; border-color: #fed7aa; background: #fff7ed; &.dt-chip--active { background: #ea580c; border-color: #ea580c; color: #fff; } }
+}
+
+
+// ── Search input ──────────────────────────────────────────────────────────────
+.dt-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.dt-search__icon {
+  position: absolute;
+  left: 8px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  color: var(--text-color);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.dt-search__input {
+  height: 38px;
+  width: 200px;
+  padding: 0 12px 0 34px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--text-color);
+  background: var(--card-bg);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:focus       { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+  &::placeholder { color: var(--text-color); opacity: 0.5; }
+}
+
+
+// ── Card & scroll ─────────────────────────────────────────────────────────────
+// overflow must stay visible so the three-dot dropdown can escape the card.
+// Border-radius clipping is handled by styling individual corner cells below.
+.dt-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.dt-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dt-table  { width: 100%; }
+.dt-hidden { display: none !important; }
+
+
+// ── Loading ───────────────────────────────────────────────────────────────────
+.dt-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px;
+  color: var(--text-color);
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+.dt-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-color);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: dt-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes dt-spin { to { transform: rotate(360deg); } }
+
+
+// ── Angular Material overrides (scoped to .dt-card) ───────────────────────────
+::ng-deep .dt-card {
+  .mat-mdc-table { background: var(--card-bg) !important; }
+
+  .mat-mdc-header-row {
+    background: var(--card-bg) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .mat-mdc-header-cell {
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    opacity: 0.6;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0;
+    text-transform: none;
+    border-bottom: none !important;
+    padding: 0 16px !important;
+  }
+
+  .mat-mdc-row {
+    background: var(--card-bg) !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: background 0.1s ease;
+
+    &:last-child { border-bottom: none !important; }
+    &:hover      { background: var(--bg-color) !important; }
+  }
+
+  .mat-mdc-cell {
+    background: transparent !important;
+    color: var(--text-color) !important;
+    font-size: 13.5px !important;
+    padding: 0 16px !important;
+    border-bottom: none !important;
+  }
+
+  .mat-mdc-paginator {
+    background: var(--card-bg) !important;
+    border-top: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    opacity: 0.7;
+    font-size: 13px !important;
+    border-radius: 0 0 12px 12px;
+  }
+
+  // Page-size select — suppress MDC outline, apply our own look
+  .mat-mdc-paginator-page-size-select {
+    // Kill the MDC notched outline (the square border)
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing { border: none !important; }
+    .mdc-notched-outline { display: none !important; }
+
+    // Style the trigger itself
+    .mat-mdc-select-trigger {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 13px;
+      color: var(--text-color);
+      min-width: 64px;
+    }
+    .mat-mdc-select-value { color: var(--text-color) !important; }
+    .mat-mdc-select-arrow { color: var(--text-color); opacity: 0.6; }
+
+    &.mat-focused .mat-mdc-select-trigger {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  // Navigation buttons (prev / next / first / last)
+  .mat-mdc-paginator-navigation-first,
+  .mat-mdc-paginator-navigation-previous,
+  .mat-mdc-paginator-navigation-next,
+  .mat-mdc-paginator-navigation-last {
+    color: var(--text-color) !important;
+    opacity: 0.7;
+
+    &:hover:not([disabled]) {
+      background: var(--bg-color) !important;
+    }
+    &[disabled] { opacity: 0.35; }
+
+    // MDC ripple adds a semi-transparent bg on state layer — remove it
+    .mat-mdc-button-persistent-ripple::before { background: transparent !important; }
+  }
+
+  // Page range label ("1 – 10 of 24")
+  .mat-mdc-paginator-range-label { color: var(--text-color) !important; opacity: 0.7; font-size: 13px !important; }
+
+  .mat-sort-header-arrow { color: var(--text-color); opacity: 0.6; }
+  .mat-sort-header-container:hover .mat-sort-header-arrow { color: var(--text-color); }
+
+  // Clip table corners to match the card border-radius
+  // (replaces the overflow:hidden approach on the card)
+  .mat-mdc-header-cell:first-of-type { border-radius: 12px 0 0 0; }
+  .mat-mdc-header-cell:last-of-type  { border-radius: 0 12px 0 0; }
+}
+
+
+// ── Cell helpers ──────────────────────────────────────────────────────────────
+.cell-name    { font-weight: 500; color: var(--text-color) !important; }
+.cell-muted   { color: var(--text-color) !important; opacity: 0.7; }
+.cell-weight  { font-weight: 600; }
+.cell-actions { width: 56px; }
+
+
+// ── Badges ────────────────────────────────────────────────────────────────────
+.dt-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  &--spec {
+    background: var(--bg-color); color: var(--text-color); opacity: 0.8;
+    &[data-spec="0"] { background: #f5f3ff; color: #6d28d9; opacity: 1; }
+    &[data-spec="1"] { background: #f0fdfa; color: #0f766e; opacity: 1; }
+    &[data-spec="2"] { background: #fffbeb; color: #92400e; opacity: 1; }
+    &[data-spec="3"] { background: #eff6ff; color: #1e40af; opacity: 1; }
+    &[data-spec="4"] { background: #fff1f2; color: #9f1239; opacity: 1; }
+    &[data-spec="5"] { background: #f0fdf4; color: #166534; opacity: 1; }
+    &[data-spec="6"] { background: #faf5ff; color: #5b21b6; opacity: 1; }
+    &[data-spec="7"] { background: #fff7ed; color: #9a3412; opacity: 1; }
+  }
+  &--attr { background: var(--bg-color); color: var(--text-color); opacity: 0.8; }
+
+  &--type {
+    // Paleta cíclica por índice de inserción (fallback para tipos nuevos, 0-7)
+    &[data-type-idx="0"] { background: #ede9fe; color: #6d28d9; }
+    &[data-type-idx="1"] { background: #ccfbf1; color: #0f766e; }
+    &[data-type-idx="2"] { background: #fef3c7; color: #92400e; }
+    &[data-type-idx="3"] { background: #dbeafe; color: #1e40af; }
+    &[data-type-idx="4"] { background: #ffe4e6; color: #9f1239; }
+    &[data-type-idx="5"] { background: #dcfce7; color: #166534; }
+    &[data-type-idx="6"] { background: #f3e8ff; color: #5b21b6; }
+    &[data-type-idx="7"] { background: #ffedd5; color: #9a3412; }
+    // Colores por nombre (mayor prioridad al ir después, solo para tipos definidos)
+    &[data-type*='tecnica'],
+    &[data-type*='técnica'] { background: #ede9fe; color: #6d28d9; }
+    &[data-type*='soft']       { background: #ccfbf1; color: #0f766e; }
+    &[data-type*='liderazgo']  { background: #fef3c7; color: #92400e; }
+    &[data-type*='compliance'] { background: #f1f5f9; color: #4b5563; }
+  }
+}
+
+
+// ── Status dot ────────────────────────────────────────────────────────────────
+.dt-dot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  margin: -4px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: var(--border-color); }
+}
+
+.dt-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d1d5db;
+  display: inline-block;
+  transition: background 0.2s;
+
+  &--active { background: #10b981; }
+}
+
+
+// ── Three-dot action menu ─────────────────────────────────────────────────────
+.dt-menu { position: relative; }
+
+.dt-menu__trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover { background: var(--bg-color); }
+
+  span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-color);
+    opacity: 0.6;
+    display: block;
+  }
+}
+
+.dt-menu__dropdown {
+  position: fixed;   // escapes overflow contexts (scroll wrappers, table cells)
+  z-index: 1000;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  min-width: 148px;
+  overflow: hidden;
+}
+
+.dt-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 14px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text-color);
+  cursor: pointer;
+  text-align: left;
+
+  i          { width: 14px; text-align: center; }
+  &:hover    { background: var(--bg-color); }
+  &--danger  { color: #ef4444; &:hover { background: #fef2f2; } }
+}
+
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.dt-empty {
+  display: block;
+  text-align: center;
+  padding: 56px 20px !important;
+  color: var(--text-color);
+  opacity: 0.6;
+  font-size: 14px;
+  background: var(--card-bg);
+}

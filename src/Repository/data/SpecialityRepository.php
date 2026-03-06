@@ -16,5 +16,21 @@ class SpecialityRepository extends ServiceEntityRepository
         parent::__construct($registry, Speciality::class);
     }
 
+    public function save(Speciality $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Speciality $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

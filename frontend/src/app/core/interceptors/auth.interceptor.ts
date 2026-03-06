@@ -1,15 +1,13 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError, tap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 
-/**
- * Interceptor para agregar el token de autenticación a las solicitudes HTTP salientes.
- * @param req La solicitud HTTP entrante.
- * @param next El siguiente interceptor en la cadena.
- * @returns La solicitud HTTP modificada con el token de autenticación.
- */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(AuthService).getToken();
+  const authService = inject(AuthService);
+  const router      = inject(Router);
+  const token       = authService.getToken();
 
   if (token) {
     req = req.clone({
@@ -17,5 +15,19 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  return next(req);
+  return next(req).pipe(
+    tap((event) => {
+      if (event instanceof HttpResponse) {
+        const renewed = event.headers.get('X-Renewed-Token');
+        if (renewed) authService.setToken(renewed);
+      }
+    }),
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        authService.logout();
+        router.navigate(['/login']);
+      }
+      return throwError(() => err);
+    }),
+  );
 };

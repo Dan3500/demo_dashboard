@@ -1,8 +1,107 @@
 <div class="layout">
   <app-navbar />
   <main class="layout__content">
-    <h2>Dashboard</h2>
-    <p>Bienvenido al panel de administración.</p>
+
+    <!-- ── Header ─────────────────────────────────────────────────────── -->
+    <div class="db-header">
+      <div class="db-header__text">
+        <h1>Dashboard</h1>
+        <p>Resumen del framework de carrera profesional</p>
+      </div>
+      <div class="dt-select-wrap db-header__filter">
+        <mat-icon class="dt-select-icon">work</mat-icon>
+        <select class="dt-select" (change)="onSpecialityChange($event)">
+          <option value="">Todas las especialidades</option>
+          @for (s of specialities(); track s.id) {
+            <option [value]="s.id">{{ s.name }}</option>
+          }
+        </select>
+        <mat-icon class="dt-select-chevron">expand_more</mat-icon>
+      </div>
+    </div>
+
+    <!-- ── Loading ────────────────────────────────────────────────────── -->
+    @if (loading()) {
+      <div class="db-loading">
+        <span class="dt-spinner"></span>
+        Cargando estadísticas...
+      </div>
+    }
+
+    @if (!loading() && stats()) {
+
+      <!-- ── Stat cards ────────────────────────────────────────────────── -->
+      <div class="db-cards">
+
+        <div class="db-card">
+          <div class="db-card__info">
+            <span class="db-card__label">Total personas</span>
+            <span class="db-card__value">{{ stats()!.total_persons }}</span>
+            @if (!selectedSpecialityId()) {
+              <span class="db-card__sub">En {{ stats()!.total_specialities }} especialidades</span>
+            }
+          </div>
+          <div class="db-card__icon">
+            <mat-icon>group</mat-icon>
+          </div>
+        </div>
+
+        <div class="db-card">
+          <div class="db-card__info">
+            <span class="db-card__label">Competencias activas</span>
+            <span class="db-card__value">{{ stats()!.active_competencies }}</span>
+            @if (!selectedSpecialityId()) {
+              <span class="db-card__sub">En {{ stats()!.total_specialities }} especialidades</span>
+            }
+          </div>
+          <div class="db-card__icon">
+            <mat-icon>track_changes</mat-icon>
+          </div>
+        </div>
+
+        <div class="db-card">
+          <div class="db-card__info">
+            <span class="db-card__label">Cumplimiento medio</span>
+            <span class="db-card__value">{{ stats()!.avg_compliance }}%</span>
+            <span class="db-card__sub">Promedio del equipo</span>
+          </div>
+          <div class="db-card__icon">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Charts ────────────────────────────────────────────────────── -->
+      <div class="db-charts">
+
+        <div class="db-chart-card">
+          <h3 class="db-chart-card__title">Distribución por nivel</h3>
+          <div class="db-chart-card__canvas-wrap">
+            <canvas #barCanvas></canvas>
+          </div>
+        </div>
+
+        <div class="db-chart-card">
+          <h3 class="db-chart-card__title">Personas por especialidad</h3>
+          <div class="db-chart-card__donut-wrap">
+            <div class="db-chart-card__canvas-wrap db-chart-card__canvas-wrap--donut">
+              <canvas #donutCanvas></canvas>
+            </div>
+            <div class="db-legend">
+              @for (s of stats()!.persons_by_speciality; track s.id) {
+                <span class="db-legend__item">
+                  <span class="db-legend__dot" [style.background]="getSpecColor(s.id)"></span>
+                  {{ s.name }} ({{ s.count }})
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+    }
+
   </main>
 </div>
 

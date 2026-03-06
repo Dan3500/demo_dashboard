@@ -1,1 +1,61 @@
-<p>form works!</p>
+<form class="cform" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="ppl-name">Nombre <span class="cform__required">*</span></label>
+      <input
+        id="ppl-name"
+        class="cform__input"
+        [class.cform__input--error]="form.get('name')?.invalid && form.get('name')?.touched"
+        formControlName="name"
+        placeholder="Ej: Juan García"
+        autocomplete="off"
+      />
+      @if (form.get('name')?.invalid && form.get('name')?.touched) {
+        <span class="cform__error">El nombre es obligatorio</span>
+      }
+    </div>
+  </div>
+
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="ppl-level">Nivel asociado</label>
+      <select id="ppl-level" class="cform__select" formControlName="level_id">
+        <option [value]="null">Sin nivel</option>
+        @for (l of levels(); track l.id) {
+          <option [value]="l.id">{{ l.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="cform__row cform__row--two">
+    <div class="cform__field">
+      <label class="cform__label" for="ppl-evaluator">Evaluador</label>
+      <select id="ppl-evaluator" class="cform__select" formControlName="evaluator">
+        <option [value]="null">Sin evaluador</option>
+        @for (p of people(); track p.id) {
+          @if (p.id !== editingId) {
+            <option [value]="p.id">{{ p.name }}</option>
+          }
+        }
+      </select>
+    </div>
+
+    <div class="cform__field cform__field--toggle">
+      <span class="cform__label">Estado</span>
+      <label class="cform__toggle">
+        <input type="checkbox" formControlName="active" />
+        <span class="cform__toggle-track"></span>
+        <span class="cform__toggle-label">{{ form.get('active')?.value ? 'Activa' : 'Inactiva' }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="cform__actions">
+    <button type="button" class="cform__btn cform__btn--cancel" (click)="closeForm()">Cancelar</button>
+    <button type="submit" class="cform__btn cform__btn--submit" [disabled]="form.invalid || submitting()">
+      @if (submitting()) { <span class="cform__spinner"></span> }
+      {{ isEditMode() ? 'Actualizar' : 'Crear persona' }}
+    </button>
+  </div>
+</form>

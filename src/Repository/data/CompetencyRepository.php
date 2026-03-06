@@ -16,5 +16,21 @@ class CompetencyRepository extends ServiceEntityRepository
         parent::__construct($registry, Competency::class);
     }
 
+    public function save(Competency $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Competency $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

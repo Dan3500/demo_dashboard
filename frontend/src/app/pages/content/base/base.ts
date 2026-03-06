@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import { Navbar } from '../../../shared/navbar/navbar';
 import { Modal } from '../../../shared/modal/modal';
 import { SpecialitiesDataTable } from '../_components/specialities/data-table/data-table';
@@ -8,11 +9,10 @@ import { LevelsDataTable } from '../_components/levels/data-table/data-table';
 import { LevelsForm } from '../_components/levels/form/form';
 import { CompetenciesDataTable } from '../_components/competencies/data-table/data-table';
 import { CompetenciesForm } from '../_components/competencies/form/form';
+import { TypeForm } from '../_components/competencies/type-form/type-form';
 import { PeopleDataTable } from '../_components/people/data-table/data-table';
 import { PeopleForm } from '../_components/people/form/form';
-import { EvaluationsDataTable } from '../_components/evaluations/data-table/data-table';
-import { EvaluationsForm } from '../_components/evaluations/form/form';
-import { ReportsDataTable } from '../_components/reports/data-table/data-table';
+
 
 export interface PageConfig {
   entity: string;
@@ -29,8 +29,7 @@ export interface PageConfig {
     LevelsDataTable, LevelsForm,
     CompetenciesDataTable, CompetenciesForm,
     PeopleDataTable, PeopleForm,
-    EvaluationsDataTable, EvaluationsForm,
-    ReportsDataTable,
+    MatIconModule, TypeForm,
   ],
   templateUrl: './base.html',
   styleUrl: './base.scss',
@@ -38,6 +37,7 @@ export interface PageConfig {
 export class Base implements OnInit {
   config!: PageConfig;
   modalOpen = false;
+  typeManagerOpen = false;
 
   constructor(private readonly route: ActivatedRoute) {}
 
@@ -51,5 +51,13 @@ export class Base implements OnInit {
 
   closeModal(): void {
     this.modalOpen = false;
+  }
+
+  openTypeManager(): void {
+    this.typeManagerOpen = true;
+  }
+
+  closeTypeManager(): void {
+    this.typeManagerOpen = false;
   }
 }

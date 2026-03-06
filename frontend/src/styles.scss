@@ -6,7 +6,63 @@
   padding: 0;
 }
 
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --navbar-bg: #1b5bc2;
+  --navbar-text: #ffffff;
+  --card-bg: #ffffff;
+  --border-color: #e5e7eb;
+}
+
+body.dark {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --navbar-bg: #0d2a5c;
+  --navbar-text: #ffffff;
+  --card-bg: #1e1e1e;
+  --border-color: #555555;
+}
+
 body {
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+// ── Angular Material CDK overlay (global, cannot be scoped) ───────────────────
+// Paginator page-size select dropdown panel
+.mat-mdc-select-panel {
+  background: #fff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px 0 !important;
+
+  .mdc-list-item {
+    font-size: 13px !important;
+    color: #374151 !important;
+    min-height: 36px !important;
+  }
+
+  .mdc-list-item__primary-text {
+    color: #374151 !important;
+  }
+
+  // Selected option
+  .mdc-list-item--selected .mdc-list-item__primary-text { color: #3b82f6 !important; }
+
+  // Hover state — kill the MDC state-layer transparent wash
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+    background: #f3f4f6 !important;
+  }
+  .mat-mdc-option.mat-mdc-option-active {
+    background: #eff6ff !important;
+  }
+
+  // Remove the ripple overlay that creates transparent look
+  .mat-mdc-option .mat-ripple,
+  .mat-mdc-option .mat-mdc-option-ripple { display: none !important; }
+  .mat-pseudo-checkbox { display: none !important; }
 }

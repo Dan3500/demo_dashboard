@@ -28,7 +28,7 @@ export class AuthService {
 
   login(credentials: LoginRequest): Observable<ResponseModel<LoginData>> {
     return this.http
-      .post<ResponseModel<LoginData>>(`${env.apiUrl}/auth/login`, credentials)
+      .post<ResponseModel<LoginData>>(`${env.apiUrl}/auth/v1/login`, credentials)
       // Guardamos el token y los datos del admin en localStorage y en el signal
       .pipe(
         tap((res) => {
@@ -51,6 +51,10 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   // Método para verificar si el usuario está autenticado

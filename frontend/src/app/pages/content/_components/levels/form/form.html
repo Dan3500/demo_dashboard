@@ -1,1 +1,67 @@
-<p>form works!</p>
+<form class="cform" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="lvl-name">Nombre <span class="cform__required">*</span></label>
+      <input
+        id="lvl-name"
+        class="cform__input"
+        [class.cform__input--error]="form.get('name')?.invalid && form.get('name')?.touched"
+        formControlName="name"
+        placeholder="Ej: Senior"
+        autocomplete="off"
+      />
+      @if (form.get('name')?.invalid && form.get('name')?.touched) {
+        <span class="cform__error">El nombre es obligatorio</span>
+      }
+    </div>
+  </div>
+
+  <div class="cform__row">
+    <div class="cform__field">
+      <label class="cform__label" for="lvl-desc">Descripción</label>
+      <input
+        id="lvl-desc"
+        class="cform__input"
+        formControlName="description"
+        placeholder="Descripción opcional"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <div class="cform__row cform__row--two">
+    <div class="cform__field">
+      <label class="cform__label" for="lvl-pct">Porcentaje <span class="cform__required">*</span></label>
+      <input
+        id="lvl-pct"
+        class="cform__input"
+        [class.cform__input--error]="form.get('percentage')?.invalid && form.get('percentage')?.touched"
+        type="number"
+        min="0"
+        max="100"
+        formControlName="percentage"
+      />
+      @if (form.get('percentage')?.invalid && form.get('percentage')?.touched) {
+        <span class="cform__error">Debe ser un valor entre 0 y 100</span>
+      }
+    </div>
+
+    <div class="cform__field">
+      <label class="cform__label" for="lvl-spec">Especialidad</label>
+      <select id="lvl-spec" class="cform__select" formControlName="speciality_id">
+        <option [value]="null">Sin especialidad</option>
+        @for (s of specialities(); track s.id) {
+          <option [value]="s.id">{{ s.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="cform__actions">
+    <button type="button" class="cform__btn cform__btn--cancel" (click)="closeForm()">Cancelar</button>
+    <button type="submit" class="cform__btn cform__btn--submit" [disabled]="form.invalid || submitting()">
+      @if (submitting()) { <span class="cform__spinner"></span> }
+      {{ isEditMode() ? 'Actualizar' : 'Crear nivel' }}
+    </button>
+  </div>
+</form>

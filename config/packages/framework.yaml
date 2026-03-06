@@ -17,6 +17,11 @@ framework:
     php_errors:
         log: true
 
+when@prod:
+    framework:
+        router:
+            default_uri: '%env(APP_BASE_URL)%'
+
 when@test:
     framework:
         test: true

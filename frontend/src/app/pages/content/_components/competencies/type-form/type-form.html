@@ -1,0 +1,74 @@
+<app-modal [visible]="true" title="Gestionar tipos" (closed)="dismiss()">
+
+  <!-- Lista de tipos existentes -->
+  <ul class="tl-list">
+    @for (type of types(); track type.id) {
+      <li class="tl-list__item" [class.tl-list__item--editing]="editing()?.id === type.id">
+
+        @if (editing()?.id === type.id) {
+          <!-- Edición inline -->
+          <input
+            class="tl-list__inline-input"
+            [ngModel]="editingName()"
+            (ngModelChange)="editingName.set($event)"
+            (keyup.enter)="saveEdit()"
+            (keyup.escape)="cancelEdit()"
+            autocomplete="off"
+            autofocus
+          />
+          <div class="tl-list__actions">
+            <button
+              type="button"
+              class="tl-list__btn tl-list__btn--save"
+              [disabled]="!editingName().trim() || submitting()"
+              (click)="saveEdit()"
+            >
+              @if (submitting()) { <span class="tl-list__spinner"></span> } @else { ✓ }
+            </button>
+            <button type="button" class="tl-list__btn tl-list__btn--cancel" (click)="cancelEdit()">✕</button>
+          </div>
+        } @else {
+          <!-- Vista normal -->
+          <span class="tl-list__name">{{ type.name }}</span>
+          <div class="tl-list__actions">
+            <button type="button" class="tl-list__btn tl-list__btn--edit" (click)="startEdit(type)">Editar</button>
+            <button type="button" class="tl-list__btn tl-list__btn--delete" (click)="confirmDelete(type)">Eliminar</button>
+          </div>
+        }
+
+      </li>
+    }
+    @if (types().length === 0) {
+      <li class="tl-list__empty">No hay tipos creados aún.</li>
+    }
+  </ul>
+
+  <!-- Formulario: nuevo tipo -->
+  <div class="cform" style="margin-top: 16px;">
+    <div class="cform__row">
+      <div class="cform__field">
+        <label class="cform__label">Nuevo tipo</label>
+        <input
+          class="cform__input"
+          [ngModel]="newName()"
+          (ngModelChange)="newName.set($event)"
+          placeholder="Nombre del tipo..."
+          (keyup.enter)="saveNew()"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+    <div class="cform__actions">
+      <button
+        type="button"
+        class="cform__btn cform__btn--submit"
+        [disabled]="!newName().trim() || submitting()"
+        (click)="saveNew()"
+      >
+        @if (submitting()) { <span class="cform__spinner"></span> }
+        Añadir tipo
+      </button>
+    </div>
+  </div>
+
+</app-modal>

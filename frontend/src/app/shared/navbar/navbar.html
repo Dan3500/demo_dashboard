@@ -1,6 +1,14 @@
 <div class="navbar-wrapper" [class.navbar-wrapper--collapsed]="collapsed()">
   <aside class="navbar">
 
+    <!-- Header -->
+    <div class="navbar__header">
+      <span class="navbar__admin-name">Daniel Soltero Bernal</span>
+      <button class="navbar__theme-toggle" (click)="toggleTheme()" [title]="isDarkMode() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+        <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </div>
+
     <!-- Elementos de navegación -->
     <nav class="navbar__nav">
       @for (item of navItems; track item.route) {
@@ -9,8 +17,8 @@
           [routerLink]="item.route"
           routerLinkActive="navbar__item--active"
         >
-          <mat-icon class="navbar__item-icon">{{ item.icon }}</mat-icon>
           <span class="navbar__item-label">{{ item.label }}</span>
+          <mat-icon class="navbar__item-icon">{{ item.icon }}</mat-icon>
         </a>
       }
     </nav>
